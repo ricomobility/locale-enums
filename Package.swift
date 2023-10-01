@@ -5,7 +5,7 @@ import PackageDescription
 import CompilerPluginSupport
 
 let package = Package(
-    name: "LocaleEnums",
+    name: "locale-enums",
     platforms: [.macOS(.v13), .iOS(.v16), .tvOS(.v16), .watchOS(.v9), .macCatalyst(.v16)],
     products: [
         // Products define the executables and libraries a package produces, making them visible to other packages.
