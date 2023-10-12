@@ -9,7 +9,7 @@ public struct CountriesMacro: MemberMacro {
         guard declaration.is(EnumDeclSyntax.self) else {
             throw LocaleEnumsMacroError.notEnum
         }
-        let countryCodes = Locale.Region.isoRegions.map(\.identifier)
+        let countryCodes = Locale.regionCodes
         let keywords = ["as", "do", "in", "is"]
         var cases = ""
         for code in countryCodes where Int(code) == nil {

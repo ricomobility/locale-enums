@@ -9,7 +9,7 @@ public struct CurrenciesMacro: MemberMacro {
         guard declaration.is(EnumDeclSyntax.self) else {
             throw LocaleEnumsMacroError.notEnum
         }
-        let currencies = Locale.Currency.isoCurrencies.map(\.identifier)
+        let currencies = Locale.isoCurrencies
         let keywords = ["try"]
         var cases = ""
         for code in currencies {
