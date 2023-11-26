@@ -11,15 +11,25 @@ public struct CountriesMacro: MemberMacro {
         }
         let countryCodes = Locale.regionCodes
         let keywords = ["as", "do", "in", "is"]
-        var cases = ""
+        var cases: [EnumCaseDeclSyntax] = []
         for code in countryCodes where Int(code) == nil {
             var param = code.lowercased()
             if keywords.contains(param) {
                 param = "`\(param)`"
             }
-            cases += "case \(param) = \"\(code)\"\n"
+            let element = EnumCaseElementSyntax(
+                name: .identifier(param),
+                rawValue: .init(
+                    value: StringLiteralExprSyntax(content: code)
+                )
+            )
+            cases.append(
+                EnumCaseDeclSyntax(
+                    elements: EnumCaseElementListSyntax([element])
+                )
+            )
         }
-        return [.init(stringLiteral: cases)]
+        return cases.map(DeclSyntax.init)
     }
 }
 

@@ -11,14 +11,24 @@ public struct CurrenciesMacro: MemberMacro {
         }
         let currencies = Locale.isoCurrencies
         let keywords = ["try"]
-        var cases = ""
+        var cases: [EnumCaseDeclSyntax] = []
         for code in currencies {
             var param = code.lowercased()
             if keywords.contains(param) {
                 param = "`\(param)`"
             }
-            cases += "case \(param) = \"\(code)\"\n"
+            let element = EnumCaseElementSyntax(
+                name: .identifier(param),
+                rawValue: .init(
+                    value: StringLiteralExprSyntax(content: code)
+                )
+            )
+            cases.append(
+                EnumCaseDeclSyntax(
+                    elements: EnumCaseElementListSyntax([element])
+                )
+            )
         }
-        return [.init(stringLiteral: cases)]
+        return cases.map(DeclSyntax.init)
     }
 }
